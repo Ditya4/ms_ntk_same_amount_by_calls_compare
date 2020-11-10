@@ -31,15 +31,15 @@ class MsCalls:
         return line_to_return
     
     def hash_create(self):
-        hash = ''
-        if len(self.uni_b) == 12 and str(self.uni_b)[:3] == '380':
+        hash = ''  # len(self.uni_b) == 12 and 
+        if str(self.uni_b)[:3] == '380':
             uni_b = self.uni_b[3:]
         else:
             uni_b = self.uni_b
         if str(self.uni_a)[:3] == '380':
             uni_a = str(self.uni_a)[3:]
         else:
-            uni_a = str(self.uni_a)
+            uni_a = '0'  # for 8800 and international A 
         
         hash = (str(self.switch_id) + uni_a + uni_b +
                 str(self.inc_tg) +
@@ -76,8 +76,8 @@ class NtkCalls:
         return line_to_return
     
     def hash_create(self):
-        hash = ''
-        if len(self.number_b) == 10 and str(self.number_b)[0] == '0':
+        hash = ''  # len(self.number_b) == 10 and
+        if str(self.number_b)[0] == '0':
             number_b = str(self.number_b[1:])
         else:
             number_b = str(self.number_b)
@@ -189,6 +189,15 @@ for record in list_of_ms_calls:
     hash_calls.update({record.hash: record})
 print("len(hash_calls) =", len(hash_calls))
 for record in list_of_ntk_calls:
-    hash_calls.pop(record.hash)
+    try:
+        hash_calls.pop(record.hash)
+        #print('good')
+    except:
+        print(record)
+        pass
 print("len(hash_calls) =", len(hash_calls))
+
+for hash, call in hash_calls.items():
+    print(call)
+    
     
