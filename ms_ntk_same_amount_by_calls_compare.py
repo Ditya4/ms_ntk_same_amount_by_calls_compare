@@ -62,7 +62,10 @@ class NtkCalls:
         self.call_type = call_type
         self.cdr_set_id = cdr_set_id
         # calculated fields
+        if number_b[:2] == '10':
+            self.number_b = number_b[2:]
         self.hash = self.hash_create()
+        
 
     def __str__(self):
         '''
@@ -166,22 +169,83 @@ def read_ms_calls(folder, file_name):
 
 
 # main for ntk_calls part():
-ntk_calls_folder = "D:\python\double_dno\ms_ntk_in_same_amount\station 3203"
-ntk_calls_file_name = "3203_1_day_ntk.txt"
+
+#3203
+
+#===============================================================================
+# ntk_calls_folder = "D:\python\double_dno\ms_ntk_same_amount_by_calls_compare\ms_ntk_in_same_amount\station 3203"
+# ntk_calls_file_name = "3203_1_day_ntk.txt"
+#===============================================================================
+
+#3200
+
+#===============================================================================
+# ntk_calls_folder = "D:\python\double_dno\ms_ntk_same_amount_by_calls_compare\ms_ntk_in_same_amount\station 3200"
+# ntk_calls_file_name = "3200_1_day_ntk.txt"
+#===============================================================================
+
+# 3205
+
+#===============================================================================
+# ntk_calls_folder = "D:\python\double_dno\ms_ntk_same_amount_by_calls_compare\ms_ntk_in_same_amount\station 3205"
+# ntk_calls_file_name = "3205_20_day_ntk.txt"
+#===============================================================================
+
+# 4462
+
+ntk_calls_folder = "D:\python\double_dno\ms_ntk_same_amount_by_calls_compare\ms_ntk_in_same_amount\station 4462"
+ntk_calls_file_name = "4462_20_day_ntk.txt"
+
 list_of_ntk_calls = read_ntk_calls(ntk_calls_folder, ntk_calls_file_name)
 print("ntk_calls_list:")
 for record in list_of_ntk_calls:
-    print(record)
-    
+    # print(record)
+    pass
 
 # main for ms_calls part():
-ms_calls_folder = "D:\python\double_dno\ms_ntk_in_same_amount\station 3203"
-ms_calls_file_name = "3203_1_day_ms.txt"
+
+# 3203
+#===============================================================================
+# ms_calls_folder = "D:\python\double_dno\ms_ntk_same_amount_by_calls_compare\ms_ntk_in_same_amount\station 3203"
+# ms_calls_file_name = "3203_1_day_ms.txt"
+#===============================================================================
+
+# 3200 we have error what we classify 0(sometimes 1)second duration length
+#      with uni_a = 380322000000
+
+#===============================================================================
+# ms_calls_folder = "D:\python\double_dno\ms_ntk_same_amount_by_calls_compare\ms_ntk_in_same_amount\station 3200"
+# ms_calls_file_name = "3200_1_day_ms.txt"
+#===============================================================================
+
+# 3205
+# 764 , 3205 , 380443937659 , 38032112 , 03.09.2020 11:18:12 , 1902 , 5 , 3267 , 1 , 2
+
+#===============================================================================
+# ms_calls_folder = "D:\python\double_dno\ms_ntk_same_amount_by_calls_compare\ms_ntk_in_same_amount\station 3205"
+# ms_calls_file_name = "3205_20_day_ms.txt"
+#===============================================================================
+
+#4462
+
+ms_calls_folder = "D:\python\double_dno\ms_ntk_same_amount_by_calls_compare\ms_ntk_in_same_amount\station 4462"
+ms_calls_file_name = "4462_20_day_ms.txt"
+
+
 list_of_ms_calls = read_ms_calls(ms_calls_folder, ms_calls_file_name)
 print("ms_calls_list:")
+
 #===============================================================================
 # for record in list_of_ms_calls:
-#     print(record)
+#     if record.uni_a == '380987009285':
+#             print('ms', record.hash)
+#===============================================================================
+
+#===============================================================================
+#             
+# for record in list_of_ntk_calls:
+#     if record.number_a == '987009285':
+#             print('ntk', record.hash)
 #===============================================================================
 
 hash_calls = dict()
@@ -191,13 +255,16 @@ print("len(hash_calls) =", len(hash_calls))
 for record in list_of_ntk_calls:
     try:
         hash_calls.pop(record.hash)
-        #print('good')
+        # print('good')
     except:
-        print(record)
+        #if record.number_a == '987009285':
+        print('exept:', record)
         pass
 print("len(hash_calls) =", len(hash_calls))
 
 for hash, call in hash_calls.items():
-    print(call)
+    if call.duration != '0':
+        print(call)
+    pass
     
     
